@@ -141,6 +141,7 @@ sub main ( )
     my $dfrac = $DEFAULT_PARAMETERS { "DIAG_FACTOR" };
     my $blen = $DEFAULT_PARAMETERS { "BREAK_LEN" };
     my $psw = $DEFAULT_PARAMETERS { "POST_SWITCHES" };
+    my $threads = $DEFAULT_PARAMETERS { "POST_SWITCHES" };
 
     my $fwd;              # if true, use forward strand
     my $rev;              # if true, use reverse strand
@@ -154,7 +155,7 @@ sub main ( )
     my $simplify = 1;     # if true, simplify shadowed alignments
 
     my $generate_coords;
-    my $threads = 1;
+    
 
     #-- Initialize TIGR::Foundation
     $tigr = new TIGR::Foundation;
@@ -191,7 +192,7 @@ sub main ( )
 	 "p|prefix=s" => \$pfx,
 	 "r|reverse"   => \$rev,
 	 "simplify!" => \$simplify,
-     "t" => \$threads
+     "t=i" => \$threads
 	 );
 
 

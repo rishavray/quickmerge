@@ -19,6 +19,7 @@ parser.add_argument("--stop_after_nucmer", help="do not perform the delta-filter
 parser.add_argument("--stop_after_df", help="do not perform the merger step",action="store_true")
 parser.add_argument("-lm", "--length_minimum", help="set the minimum alignment length necessary for use in quickmerge (default 0)")
 parser.add_argument("--clean_only", help="generate safe FASTA files for merging, but do not merge",action="store_true")
+parser.add_argument("-t", help="Number of threads to use for E-MEM. default = 1",action="store_true")
 
 args=parser.parse_args()
 if args.prefix:
@@ -27,6 +28,10 @@ else:
     prefix = "out"
 hypath = args.hybrid_assembly_fasta
 selfpath = args.self_assembly_fasta
+if args.t:
+    threads = args.t
+else:
+    threads = 1
 if args.hco:
     hco = args.hco
 else:
@@ -147,7 +152,7 @@ for iteration in range(0,2):
 
 #run nucmer:
 if not args.no_nucmer and not args.no_delta and not args.clean_only:
-    subprocess.call(['nucmer','-l','100','-prefix',str(prefix),str(selfpath),str(hypath)])
+    subprocess.call(['nucmer','-t',str(threads),'-l','100','-prefix',str(prefix),str(selfpath),str(hypath)])
 
 #run the delta filter on the nucmer alignment:
 if not args.no_delta and not args.stop_after_nucmer and not args.clean_only:
