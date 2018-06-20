@@ -249,7 +249,7 @@ sub main ( )
     }
 
     #-- Set up the program path names
-    my $algo_path = "./../E-MEM/e-mem";
+    my $algo_path = "$BIN_DIR/../E-MEM/e-mem";
     my $mgaps_path = "$BIN_DIR/mgaps";
     my $prenuc_path = "$AUX_BIN_DIR/prenuc";
     my $postnuc_path = "$AUX_BIN_DIR/postnuc";
