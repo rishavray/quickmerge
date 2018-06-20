@@ -17,64 +17,71 @@ The package contains all necessary components to run quickmerge. We also provide
 
 1. DOWNLOAD
 
-   To download the latest version of quickmerge and <a href = "http://mummer.sourceforge.net/">MUMmer</a>, its primary dependency, you can clone the repository using 
-   ```
+To download the latest version of quickmerge and <a href = "http://mummer.sourceforge.net/">MUMmer</a>, its primary dependency, you can clone the repository using 
+    
     git clone
-   ```
-   
+
 2. INSTALL:
 
-   UNIX:
-   To install on a unix-based system, enter the following into the command line from the directory that this readme originated from:
-   ```
-  bash make_merger.sh
-   ```
-   This will compile 'quickmerge' and MUMMer. Requires GNU c++ compiler.
+UNIX:
 
-   NON-UNIX:
+To install on a unix-based system, enter the following into the command line from the directory that this readme originated from:
 
-   On a non-unix system, you will have to manually compile these two programs, like so:
-    First, enter the 'merger' directory and enter the following command to make the merger program:
-    ```
-     make
-     ```
+    bash make_merger.sh
    
-   Then, enter the 'MUMmer3.23' directory and enter the following commands, as specified in the MUMmer readme:
-    ```
-     make check
-     make install
+This will compile 'quickmerge' and MUMMer. Requires GNU c++ compiler.
+
+NON-UNIX:
+
+On a non-unix system, you will have to manually compile these two programs, like so:
+
+First, enter the 'merger' directory and enter the following command to make the merger program:
+
+
+    make
+   
+Then, enter the 'MUMmer3.23' directory and enter the following commands, as specified in the MUMmer readme:
+
+
+    make check
+    make install
+
+
 3. RUNNING QUICKMERGE:
    WRAPPER:
 
-   The simplest way to run 'merger' is to use the python wrapper 'merge_wrapper_v2.py':
-   ```
-  merge_wrapper.py hybrid_assembly.fasta self_assembly.fasta
-   ```
-   try the command 'merge_wrapper_v2.py -h' for detail on options available with this wrapper.
+ The simplest way to run 'merger' is to use the python wrapper 'merge_wrapper_v2.py':
+   
+  
+    merge_wrapper.py hybrid_assembly.fasta self_assembly.fasta
+   
+try the command 'merge_wrapper_v2.py -h' for details on options available with this wrapper.
 
    MANUAL:
 
-   To manually run 'merger', first make a call to 'nucmer'.  Nucmer aligns the two assemblies so that the merger can find the correct splice sites:
-   ```
-  nucmer -l 100 -prefix out  self_assembly.fasta hybrid_assembly.fasta
-   ```
-   Then, use delta-filter to filter out alignments due to repeats and duplicates:
-   ```   
-  delta-filter -i 95 -r -q out.delta > out.rq.delta
-   ```
-   Finally, use 'quickmerge' to merge the two assemblies (note: the order of the self and hybrid assembly is important:
-   ```
-  quickmerge -d out.rq.delta -q hybrid_assembly.fasta -r self_assembly.fasta -hco 5.0 -c 1.5 -l n -ml m
-   ```
-   Description of the parameters:
-   
-   -q: Hybrid assembly. (this can also be a PacBio or a ONP only assembly). see <a href ="https://github.com/mahulchak/quickmerge/wiki">quickmerge wiki</a> for details
-   
-   -r: Self assembly. (can also be a hybrid assembly).
-   
-   -hco: controls the overlap cutoff used in selection of anchor contigs. Default is 5.0. 
+To manually run 'merger', first make a call to 'nucmer'.  Nucmer aligns the two assemblies so that the merger can find the correct splice sites:
+ 
+ 
+    nucmer -l 100 -prefix out  self_assembly.fasta hybrid_assembly.fasta
+  
+Then, use delta-filter to filter out alignments due to repeats and duplicates:
 
-   -c: controls the overlap cutoff for contigs used for extension of the anchor contig. Default is 1.5.
+
+    delta-filter -i 95 -r -q out.delta > out.rq.delta
+   
+Finally, use 'quickmerge' to merge the two assemblies (note: the order of the self and hybrid assembly is important:
+  
+    quickmerge -d out.rq.delta -q hybrid_assembly.fasta -r self_assembly.fasta -hco 5.0 -c 1.5 -l n -ml m
+  
+Description of the parameters:
+   
+    -q: Hybrid assembly. (this can also be a PacBio or a ONP only assembly). see <a href ="https://github.com/mahulchak/quickmerge/wiki">quickmerge wiki</a> for details
+   
+    -r: Self assembly. (can also be a hybrid assembly).
+   
+    -hco: controls the overlap cutoff used in selection of anchor contigs. Default is 5.0. 
+
+    -c: controls the overlap cutoff for contigs used for extension of the anchor contig. Default is 1.5.
 
    For both "hco" and "c", bigger the number, more stringent is the criteria for contig selection (which will lead to fewer contigs being merged). If they are too small (<1), chances of spurious merging will increase. It is better to be conservative while merging contigs!
 
