@@ -1,3 +1,4 @@
+
 # quickmerge
 
 
@@ -11,7 +12,7 @@ Why use quickmerge?
  * It is fast. Takes less than a minute to run on most genomes. You run nucmer once (nucmer is the most time consuming step) and then you can run quickmerge over a large number of parameters in a very short time.
  * Requires only fasta files and does not depend on any special data or computational resources.
  
-The package contains all necessary components to run quickmerge. We also provide a set of test data (currrently available on request) so that you can check that the program is working correctly in your computer. Please send questions and comments to mchakrab@uci.edu
+The package contains all necessary components to run quickmerge. We also provide a set of example data so that you can check that the program is working correctly in your computer. The additional E-MEM program is used as a replacement for the mummer program to speed up the mapping process. Please send questions and comments to rishav.rray@gmail.com
 
 
 1. DOWNLOAD
@@ -30,19 +31,18 @@ The package contains all necessary components to run quickmerge. We also provide
    ```
    This will compile 'quickmerge' and MUMMer. Requires GNU c++ compiler.
 
-  NON-UNIX:
+   NON-UNIX:
 
    On a non-unix system, you will have to manually compile these two programs, like so:
     First, enter the 'merger' directory and enter the following command to make the merger program:
-
-                make
+    ```
+     make
+     ```
    
    Then, enter the 'MUMmer3.23' directory and enter the following commands, as specified in the MUMmer readme:
-    
-                make check
-
-                make install
-
+    ```
+     make check
+     make install
 3. RUNNING QUICKMERGE:
    WRAPPER:
 
