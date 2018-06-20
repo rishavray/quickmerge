@@ -4,6 +4,9 @@ cd merger
 make clean
 make
 cd ..
+cd E-MEM
+make
+cd ..
 mergerpath=`pwd`
 cd MUMmer3.23
 mkdir aux_bin
