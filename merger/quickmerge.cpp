@@ -24,13 +24,14 @@ int main(int argc, char * argv[])
 
 	ifstream fin,hyb,pb;
 	ofstream fout;
+	string out_name;
 	if(*argv[16]){
 		out_name = argv[16];
 	}
 	else{
-		out_name = "merged.fasta"
+		out_name = "merged.fasta";
 	}
-	fout.open(out_name);
+	fout.open(out_name.c_str());
 
 	asmMerge merge,merge1; 
 	fastaSeq hybrid,pbOnly,merged;

@@ -84,6 +84,7 @@ my $HELP_INFO = q~
     --[no]simplify  Simplify alignments by removing shadowed clusters. Turn
                     this option off if aligning a sequence to itself to look
                     for repeats (default --simplify)
+    -t              Number of threads for E-MEM. Default = 1
     -V
     --version       Display the version information and exit
     ~;
@@ -116,7 +117,8 @@ my %DEFAULT_PARAMETERS =
      "DIAG_DIFF"         =>   "5",          # diagonal difference absolute
      "DIAG_FACTOR"       =>   ".12",        # diagonal difference fraction
      "BREAK_LEN"         =>   "200",        # extension break length
-     "POST_SWITCHES"     =>   ""            # switches for the post processing
+     "POST_SWITCHES"     =>   "",            # switches for the post processing
+     "THREADS"          =>     "1"
      );
 
 
@@ -152,6 +154,7 @@ sub main ( )
     my $simplify = 1;     # if true, simplify shadowed alignments
 
     my $generate_coords;
+    my $threads = 1;
 
     #-- Initialize TIGR::Foundation
     $tigr = new TIGR::Foundation;
@@ -187,7 +190,8 @@ sub main ( )
 	 "optimize!" => \$optimize,
 	 "p|prefix=s" => \$pfx,
 	 "r|reverse"   => \$rev,
-	 "simplify!" => \$simplify
+	 "simplify!" => \$simplify,
+     "t" => \$threads
 	 );
 
 
@@ -244,7 +248,7 @@ sub main ( )
     }
 
     #-- Set up the program path names
-    my $algo_path = "$BIN_DIR/mummer";
+    my $algo_path = "./../E-MEM/e-mem";
     my $mgaps_path = "$BIN_DIR/mgaps";
     my $prenuc_path = "$AUX_BIN_DIR/prenuc";
     my $postnuc_path = "$AUX_BIN_DIR/postnuc";
@@ -333,7 +337,7 @@ sub main ( )
 
     #-- Run mummer | mgaps and assert return value is zero
     print (STDERR "2,3: RUNNING mummer AND CREATING CLUSTERS\n");
-    open(ALGO_PIPE, "$algo_path $algo $mdir -l $size -n $pfx.ntref $qry_file |")
+    open(ALGO_PIPE, "$algo_path $algo $mdir -t $threads -l $size -n $pfx.ntref $qry_file |")
 	or $tigr->bail ("ERROR: could not open $algo_path output pipe $!");
     open(CLUS_PIPE, "| $mgaps_path -l $clus -s $gap -d $ddiff -f $dfrac > $pfx.mgaps")
 	or $tigr->bail ("ERROR: could not open $mgaps_path input pipe $!");
