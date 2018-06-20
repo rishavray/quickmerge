@@ -18,14 +18,19 @@ int main(int argc, char * argv[])
         if((argc<14) || (argc==1))
         {
 		cerr<<"All options were not supplied :("<<endl;
-		cerr<<"Usage: "<<argv[0]<<" -d delta_file.out -q hybrid.fasta -r self.fasta -hco (default=5.0) -c (default=1.5) -l seed_length_cutoff -ml merging_length_cutoff "<<endl;
+		cerr<<"Usage: "<<argv[0]<<" -d delta_file.out -q hybrid.fasta -r self.fasta -hco (default=5.0) -c (default=1.5) -l seed_length_cutoff -ml merging_length_cutoff -o output.fasta"<<endl;
        		exit(EXIT_FAILURE);
         }
 
 	ifstream fin,hyb,pb;
 	ofstream fout;
-
-	fout.open("merged.fasta");
+	if(*argv[16]){
+		out_name = argv[16];
+	}
+	else{
+		out_name = "merged.fasta"
+	}
+	fout.open(out_name);
 
 	asmMerge merge,merge1; 
 	fastaSeq hybrid,pbOnly,merged;

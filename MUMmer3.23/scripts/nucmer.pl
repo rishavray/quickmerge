@@ -96,7 +96,7 @@ my $USAGE_INFO = q~
 
 my @DEPEND_INFO =
     (
-     "$BIN_DIR/mummer",
+     "./../E-MEM/e-mem",
      "$BIN_DIR/mgaps",
      "$BIN_DIR/show-coords",
      "$AUX_BIN_DIR/postnuc",
